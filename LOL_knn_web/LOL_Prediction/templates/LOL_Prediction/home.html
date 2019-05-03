@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>LOL_Prediction</title>
+    <style>
+        body {
+            padding-top: 40px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .form-row{
+            margin-top: 20px;
+        }
+        .form-check{
+            margin-top: 40px;
+        }
+
+    </style>
+    <script language="Javascript">
+
+        function showLoading() {
+        document.getElementById('loadingmsg').style.display="block";
+        }
+
+        function hideForm()
+        {
+
+            document.getElementById("InGameForm").style.display="none";
+
+        }
+        function showForm()
+        {
+
+            document.getElementById("InGameForm").style.display="block";
+            document.getElementById("t1_towerKills").required = true;
+            document.getElementById("t1_ihibitorKills").required = true;
+            document.getElementById("t1_dragonKills").required = true;
+            document.getElementById("t1_baronKills").required = true;
+            document.getElementById("t2_towerKills").required = true;
+            document.getElementById("t2_ihibitorKills").required = true;
+            document.getElementById("t2_dragonKills").required = true;
+            document.getElementById("t2_baronKills").required = true;
+        }
+    </script>
+</head>
+<body>
+    <h1>LOL_Prediction</h1>
+    {% if messages %}
+        <div class="col-sm-6 col-sm-offset-3">
+            {% for message in messages %}
+                <P{% if message.tags == "success" %} class="alert-success"{% endif %}>{{ message }}</P>
+                <P{% if message.tags == "warning" %} class="alert-danger"{% endif %}>{{ message }}</P>
+            {% endfor %}
+        </div>
+    {% endif%}
+    <form id='form1' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label for="datasetFile">Please submit a dataset file of LOL games</label>
+                <input type="file" name="dataset" class="form-control-file" accept=".csv" required> </input>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px" onclick="showLoading()">Upload File</button>
+        </div>
+    </form>
+    <div id='loadingmsg', style="display: none">
+        <div class="spinner-border text-primary" role="status" >
+            <span class="sr-only"></span>
+        </div>
+        <p class="text-primary">Loading the data, please wait</p>
+    </div>
+    {% if team1 %}
+        <div class="alert alert-info" role="alert">
+            Winner: </br>
+            Team1: {{ team1 }} </br>
+            Team2: {{ team2 }} </br>
+        </div>
+    {% endif %}
+
+    <form id='form1' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="beforeGame" onclick="hideForm()" checked>
+              <label class="form-check-label" for="inlineRadio1">Before Game</label>
+        </div>
+        <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="inGame" onclick="showForm()">
+              <label class="form-check-label" for="inlineRadio2">In Game</label>
+        </div>
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <label for="t1champid1">T1Champ1ID</label>
+          <input type="number" class="form-control" id="t1_champ1id" name="t1_champ1id" required>
+        </div>
+        <div class="col-auto">
+        <label for="t1champid2">T1Champ2ID</label>
+          <input type="number" class="form-control" id="t1_champ2id" name="t1_champ2id" required>
+        </div>
+        <div class="col-auto">
+          <label for="t1champid3">T1Champ3ID</label>
+          <input type="number" class="form-control" id="t1_champ3id" name="t1_champ3id" required>
+        </div>
+        <div class="col-auto">
+          <label for="t1champid4">T1Champ4ID</label>
+          <input type="number" class="form-control" id="t1_champ4id" name="t1_champ4id" required>
+        </div>
+        <div class="col-auto">
+          <label for="t1champid5">T1Champ5ID</label>
+          <input type="number" class="form-control" id="t1_champ5id" name="t1_champ5id" required>
+        </div>
+      </div>
+        <div class="form-row align-items-center">
+        <div class="col-auto">
+          <label for="t2champid1">T2Champ1ID</label>
+          <input type="number" class="form-control" id="t2_champ1id" name="t2_champ1id" required>
+        </div>
+        <div class="col-auto">
+        <label for="t2champid2">T2Champ2ID</label>
+          <input type="number" class="form-control" id="t2_champ2id" name="t2_champ2id" required>
+        </div>
+        <div class="col-auto">
+          <label for="t2champid3">T2Champ3ID</label>
+          <input type="number" class="form-control" id="t2_champ3id" name="t2_champ3id" required>
+        </div>
+        <div class="col-auto">
+          <label for="t2champid4">T2Champ4ID</label>
+          <input type="number" class="form-control" id="t2_champ4id" name="t2_champ4id" required>
+        </div>
+        <div class="col-auto">
+          <label for="t2champid5">T2Champ5ID</label>
+          <input type="number" class="form-control" id="t2_champ5id" name="t2_champ5id" required>
+        </div>
+      </div>
+        <div class="form-group" id="InGameForm" style="display: none">
+            <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label for="FirstBlood">First Blood</label>
+              <select class="custom-select mr-sm-2" id="FirstBlood" name="FirstBlood">
+                <option selected value=0>Unknown</option>
+                <option value=1>Team1</option>
+                <option value=2>Team2</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label for="FirstTower">First Tower</label>
+              <select class="custom-select mr-sm-2" id="FirstTower" name="FirstTower">
+                <option selected value=0>Unknown</option>
+                <option value=1>Team1</option>
+                <option value=2>Team2</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label for="FirstInhibitor">First Inhibitor</label>
+              <select class="custom-select mr-sm-2" id="FirstInhibitor" name="FirstInhibitor">
+                <option selected value=0>Unknown</option>
+                <option value=1>Team1</option>
+                <option value=2>Team2</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label for="FirstBaron">First Baron</label>
+              <select class="custom-select mr-sm-2" id="FirstBaron" name="FirstBaron">
+                <option selected value=0>Unknown</option>
+                <option value=1>Team1</option>
+                <option value=2>Team2</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label for="FirstDragon">First Dragon</label>
+              <select class="custom-select mr-sm-2" id="FirstDragon" name="FirstDragon">
+                <option selected value=0>Unknown</option>
+                <option value=1>Team1</option>
+                <option value=2>Team2</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label for="FirstRiftHerald">First RiftHerald</label>
+              <select class="custom-select mr-sm-2" id="FirstRiftHerald" name="FirstRiftHerald">
+                <option selected value=0>Unknown</option>
+                <option value=1>Team1</option>
+                <option value=2>Team2</option>
+              </select>
+            </div>
+        </div>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                  <label for="t1_towerKills">Team1 Tower Kills</label>
+                  <input type="number" class="form-control" id="t1_towerKills" name="t1_towerKills">
+                </div>
+                <div class="col-auto">
+                  <label for="t1_ihibitorKills">Team1 Ihibitor Kills</label>
+                  <input type="number" class="form-control" id="t1_ihibitorKills" name="t1_ihibitorKills">
+                </div>
+                <div class="col-auto">
+                  <label for="t1_dragonKills">Team1 Dragon Kills</label>
+                  <input type="number" class="form-control" id="t1_dragonKills" name="t1_dragonKills">
+                </div>
+                <div class="col-auto">
+                  <label for="t1_baronKills">Team1 Baron Kills</label>
+                  <input type="number" class="form-control" id="t1_baronKills" name="t1_baronKills">
+                </div>
+          </div>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                  <label for="t2_towerKills">Team2 Tower Kills</label>
+                  <input type="number" class="form-control" id="t2_towerKills" name="t2_towerKills">
+                </div>
+                <div class="col-auto">
+                  <label for="t2_ihibitorKills">Team2 Ihibitor Kills</label>
+                  <input type="number" class="form-control" id="t2_ihibitorKills" name="t2_ihibitorKills">
+                </div>
+                <div class="col-auto">
+                  <label for="t2_dragonKills">Team2 Dragon Kills</label>
+                  <input type="number" class="form-control" id="t2_dragonKills" name="t2_dragonKills">
+                </div>
+                <div class="col-auto">
+                  <label for="t2_baronKills">Team2 Baron Kills</label>
+                  <input type="number" class="form-control" id="t2_baronKills" name="t2_baronKills">
+                </div>
+          </div>
+        </div>
+      <button type="submit" class="btn btn-primary" style="margin-top: 20px">Submit</button>
+    </form>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</body>
+</html>
